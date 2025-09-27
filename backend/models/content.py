@@ -9,7 +9,7 @@ class Skill(BaseModel):
     id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")
     user_id: PyObjectId = Field(..., alias="userId")
     name: str = Field(..., min_length=1, max_length=100)
-    category: str = Field(..., regex="^(soft|hard)$")
+    category: str = Field(..., pattern="^(soft|hard)$")
     icon: str = Field(..., min_length=1, max_length=50)
     order: int = Field(default=0)
     created_at: datetime = Field(default_factory=datetime.utcnow, alias="createdAt")
@@ -23,7 +23,7 @@ class Skill(BaseModel):
 
 class SkillCreate(BaseModel):
     name: str = Field(..., min_length=1, max_length=100)
-    category: str = Field(..., regex="^(soft|hard)$")
+    category: str = Field(..., pattern="^(soft|hard)$")
     icon: str = Field(..., min_length=1, max_length=50)
     order: int = Field(default=0)
 
