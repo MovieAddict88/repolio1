@@ -153,7 +153,9 @@ async def init_database_with_sample_data(db: AsyncIOMotorDatabase):
                     {"platform": "LinkedIn", "value": "/in/sarahjohnson", "icon": "Linkedin", "url": "https://linkedin.com/in/sarahjohnson"},
                     {"platform": "Facebook", "value": "/sarah.teacher", "icon": "Facebook", "url": "https://facebook.com/sarah.teacher"},
                     {"platform": "Instagram", "value": "@sarahteaches", "icon": "Instagram", "url": "https://instagram.com/sarahteaches"}
-                ]
+                ],
+                "createdAt": datetime.utcnow(),
+                "updatedAt": datetime.utcnow()
             }
             
             await db_manager.create_or_update_profile(user_id, profile_data)
