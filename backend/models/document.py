@@ -76,7 +76,7 @@ class ContactMessageCreate(BaseModel):
 class Analytics(BaseModel):
     id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")
     user_id: Optional[PyObjectId] = Field(default=None, alias="userId")
-    event_type: str = Field(..., regex="^(visit|download|contact)$", alias="eventType")
+    event_type: str = Field(..., pattern="^(visit|download|contact)$", alias="eventType")
     event_data: dict = Field(default={}, alias="eventData")
     ip_address: Optional[str] = Field(default=None, alias="ipAddress")
     user_agent: Optional[str] = Field(default=None, alias="userAgent")
