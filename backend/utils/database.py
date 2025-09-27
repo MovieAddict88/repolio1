@@ -92,7 +92,8 @@ class DatabaseManager:
             
             if existing:
                 # Update existing profile
-                profile_data["updatedAt"] = profile_data.get("updatedAt", None)
+                from datetime import datetime
+                profile_data["updatedAt"] = profile_data.get("updatedAt", datetime.utcnow())
                 await self.db.profiles.update_one(
                     {"userId": ObjectId(user_id)},
                     {"$set": profile_data}
