@@ -4,14 +4,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Sidebar from './components/Sidebar';
 import AboutSection from './components/sections/AboutSection';
 import SkillsSection from './components/sections/SkillsSection';
+import ExperienceSection from './components/sections/ExperienceSection';
+import EducationSection from './components/sections/EducationSection';
+import ProjectsSection from './components/sections/ProjectsSection';
+import DownloadsSection from './components/sections/DownloadsSection';
+import ContactSection from './components/sections/ContactSection';
 import { Toaster } from './components/ui/toaster';
-
-// Import other sections (will be created in next iteration)
-const ExperienceSection = () => <div className="p-8 text-center text-gray-500">Experience section - Coming soon</div>;
-const EducationSection = () => <div className="p-8 text-center text-gray-500">Education section - Coming soon</div>;
-const ProjectsSection = () => <div className="p-8 text-center text-gray-500">Projects section - Coming soon</div>;
-const DownloadsSection = () => <div className="p-8 text-center text-gray-500">Downloads section - Coming soon</div>;
-const ContactSection = () => <div className="p-8 text-center text-gray-500">Contact section - Coming soon</div>;
 
 const PortfolioHome = () => {
   const [currentSection, setCurrentSection] = useState('about');
