@@ -1,38 +1,81 @@
-import { useEffect } from "react";
-import "@/App.css";
+import React, { useState, useEffect } from 'react';
+import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import Sidebar from './components/Sidebar';
+import AboutSection from './components/sections/AboutSection';
+import SkillsSection from './components/sections/SkillsSection';
+import { Toaster } from './components/ui/toaster';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+// Import other sections (will be created in next iteration)
+const ExperienceSection = () => <div className="p-8 text-center text-gray-500">Experience section - Coming soon</div>;
+const EducationSection = () => <div className="p-8 text-center text-gray-500">Education section - Coming soon</div>;
+const ProjectsSection = () => <div className="p-8 text-center text-gray-500">Projects section - Coming soon</div>;
+const DownloadsSection = () => <div className="p-8 text-center text-gray-500">Downloads section - Coming soon</div>;
+const ContactSection = () => <div className="p-8 text-center text-gray-500">Contact section - Coming soon</div>;
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
+const PortfolioHome = () => {
+  const [currentSection, setCurrentSection] = useState('about');
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Handle dark mode persistence
+  useEffect(() => {
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    setIsDarkMode(savedDarkMode);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('darkMode', isDarkMode.toString());
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
+  const renderSection = () => {
+    switch (currentSection) {
+      case 'about':
+        return <AboutSection />;
+      case 'skills':
+        return <SkillsSection />;
+      case 'experience':
+        return <ExperienceSection />;
+      case 'education':
+        return <EducationSection />;
+      case 'projects':
+        return <ProjectsSection />;
+      case 'downloads':
+        return <DownloadsSection />;
+      case 'contact':
+        return <ContactSection />;
+      default:
+        return <AboutSection />;
     }
   };
 
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
   return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
+      <Sidebar
+        currentSection={currentSection}
+        onSectionChange={setCurrentSection}
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={toggleDarkMode}
+      />
+      
+      {/* Main Content */}
+      <div className="lg:ml-64 pt-16 lg:pt-0">
+        <main className="p-6 lg:p-8">
+          <div className="max-w-6xl mx-auto">
+            {renderSection()}
+          </div>
+        </main>
+      </div>
+
+      <Toaster />
     </div>
   );
 };
@@ -42,9 +85,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
+          <Route path="/" element={<PortfolioHome />} />
         </Routes>
       </BrowserRouter>
     </div>
