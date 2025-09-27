@@ -101,9 +101,10 @@ class DatabaseManager:
                 return str(existing["_id"])
             else:
                 # Create new profile
+                from datetime import datetime
                 profile_data["userId"] = ObjectId(user_id)
-                profile_data["createdAt"] = profile_data.get("createdAt", None)
-                profile_data["updatedAt"] = profile_data.get("updatedAt", None)
+                profile_data["createdAt"] = profile_data.get("createdAt", datetime.utcnow())
+                profile_data["updatedAt"] = profile_data.get("updatedAt", datetime.utcnow())
                 result = await self.db.profiles.insert_one(profile_data)
                 return str(result.inserted_id)
         except Exception as e:
