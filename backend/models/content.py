@@ -82,7 +82,7 @@ class EducationCreate(BaseModel):
 
 
 class ProjectMedia(BaseModel):
-    type: str = Field(..., regex="^(image|video|link)$")
+    type: str = Field(..., pattern="^(image|video|link)$")
     url: str = Field(..., min_length=1, max_length=500)
     caption: Optional[str] = Field(default="", max_length=200)
 
