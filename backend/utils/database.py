@@ -122,11 +122,15 @@ async def init_database_with_sample_data(db: AsyncIOMotorDatabase):
             # Create sample user
             from utils.auth import get_password_hash
             
+            from datetime import datetime
+            
             user_data = {
                 "username": "sarah_teacher",
                 "email": "sarah.johnson@email.com",
                 "password": get_password_hash("teacher123"),
-                "role": "admin"
+                "role": "admin",
+                "created_at": datetime.utcnow(),
+                "updated_at": datetime.utcnow()
             }
             
             user_id = await db_manager.create_document("users", user_data)
